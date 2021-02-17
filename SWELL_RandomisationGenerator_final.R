@@ -41,7 +41,7 @@ randSequenceSite2Dev <- getRandList(randSequenceSite2Dev)
 RandTableSite2Dev <- as.data.frame(t(randSequenceSite2Dev))
 names(RandTableSite2Dev)[names(RandTableSite2Dev) == "V1"] <- "group" # Changing the column name because that's the template RedCap requires
 write.csv(RandTableSite2Dev, 
-          "C:/Users/maris/ownCloud.2/PhD/Trial/Documents/StudyMaterial/RedCap/Randomisation/RandTableSite2Dev.csv",
+          "RandTableSite2Dev.csv",
           row.names = FALSE)
 
 randSequenceSite2Prod <- genSeq(randProcedure, seed = 97979)
@@ -49,7 +49,7 @@ randSequenceSite2Prod <- getRandList(randSequenceSite2Prod)
 RandTableSite2Prod <- as.data.frame(t(randSequenceSite2Prod))
 names(RandTableSite2Prod)[names(RandTableSite2Prod) == "V1"] <- "group" # Changing the column name because that's the template RedCap requires
 write.csv(RandTableSite2Prod, 
-          "C:/Users/maris/ownCloud.2/PhD/Trial/Documents/StudyMaterial/RedCap/Randomisation/RandTableSite2Prod.csv",
+          "RandTableSite2Prod.csv",
           row.names = FALSE)
 
 # Generate files for Site3
@@ -58,7 +58,7 @@ randSequenceSite3Dev <- getRandList(randSequenceSite3Dev)
 RandTableSite3Dev <- as.data.frame(t(randSequenceSite3Dev))
 names(RandTableSite3Dev)[names(RandTableSite3Dev) == "V1"] <- "group" # Changing the column name because that's the template RedCap requires
 write.csv(RandTableSite3Dev, 
-          "C:/Users/maris/ownCloud.2/PhD/Trial/Documents/StudyMaterial/RedCap/Randomisation/RandTableSite3Dev.csv",
+          "RandTableSite3Dev.csv",
           row.names = FALSE)
 
 randSequenceSite3Prod <- genSeq(randProcedure, seed = 95454)
@@ -66,15 +66,16 @@ randSequenceSite3Prod <- getRandList(randSequenceSite3Prod)
 RandTableSite3Prod <- as.data.frame(t(randSequenceSite3Prod))
 names(RandTableSite3Prod)[names(RandTableSite3Prod) == "V1"] <- "group" # Changing the column name because that's the template RedCap requires
 write.csv(RandTableSite3Prod, 
-          "Documents/StudyMaterial/RedCap/Randomisation/RandTableSite3Prod.csv",
+          "RandTableSite3Prod.csv",
           row.names = FALSE)
 
 
 
 #Testing the randomisation
 library(dplyr)
-
-#Take the first 1 to a random number (b) of rows and count how many would end up in each arm
+#We aim to recruit up to 240 participants, 80 in each site (employer). 
+#This means that the randomisation needs to generate groups that similar enough with varying number of participants (we may not recruit 80 in each site).
+#To test the procedure, take the first 1 to a random number (b) of rows and count how many would end up in each arm.
 b = sample(2:160, 1) # a random number between 2 and 160
 
 Test1 <- RandTableSite2Prod %>% #change table according to which one is to be tested
@@ -82,4 +83,4 @@ Test1 <- RandTableSite2Prod %>% #change table according to which one is to be te
   group_by(group) %>%
   count()
 b
-Test1 #Didn't do proper modelling but in repeated reruns of the script (more than 30 times, the biggest difference I got is 2)
+Test1 #Didn't do proper modelling but in repeated reruns of the script (more than 30 times, the biggest difference I got is 2, which we deemed as an acceptable difference between groups)
